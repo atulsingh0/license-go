@@ -1,7 +1,9 @@
 package main
 
 import (
+	"os"
 	"runtime"
+	"strings"
 
 	"github.com/atulsingh0/license-go/src/controllers"
 	"github.com/atulsingh0/license-go/src/initializers"
@@ -12,6 +14,10 @@ import (
 // initializing the app
 func init() {
 	initializers.LoadEnvVar()
+
+	if strings.ToUpper(os.Getenv("ENV")) == "PROD" {
+		gin.SetMode(gin.ReleaseMode)
+	}
 }
 
 func main() {
