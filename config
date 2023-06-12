@@ -1,2 +1,2 @@
-GIN_MODE=debug
+ENV=dev
 PORT=9200
