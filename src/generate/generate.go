@@ -18,27 +18,6 @@ type Rlic struct {
 	*models.RawLicense
 }
 
-type JSONString string
-
-func (j JSONString) MarshalJSON() ([]byte, error) {
-	return []byte(j), nil
-}
-
-func Display(sl models.SignedLicense) {
-	fullLicense, err := json.Marshal(sl)
-	if err != nil {
-		panic(err)
-	}
-	fmt.Printf("\nLicense: %s\n", fullLicense)
-
-	fmt.Println("\nLicense Details:")
-	fmt.Println("-------------------------------------------------------------")
-
-	sl.Signature = "** REDACTED **"
-	redactedLicense, _ := json.MarshalIndent(sl, "", "  ")
-	fmt.Println(string(redactedLicense))
-}
-
 func getKeys(key string) (ed25519.PrivateKey, string) {
 
 	// Compute the full 64 byte <private key><public key> from the private key
@@ -103,7 +82,5 @@ func (rl *Rlic) Generate() (string, error) {
 		return "", err
 	}
 	fmt.Println(string(lic))
-	// content, _ := JSONString(lic).MarshalJSON()
-
 	return string(lic), nil
 }
