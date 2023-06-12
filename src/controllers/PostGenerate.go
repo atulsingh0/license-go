@@ -11,7 +11,7 @@ import (
 func PostGenerate(c *gin.Context) {
 
 	// reading and binding the post data
-	inpBody := &generate.Rlic{}
+	inpBody := generate.Rlic{}
 	c.ShouldBindJSON(&inpBody)
 
 	// Validating the input data
