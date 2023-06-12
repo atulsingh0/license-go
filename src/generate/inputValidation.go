@@ -3,11 +3,9 @@ package generate
 import (
 	"errors"
 	"fmt"
-
-	"github.com/atulsingh0/license-go/src/models"
 )
 
-func InputValidation(inp *models.RawLicense) error {
+func (inp *Rlic) InputValidation() error {
 
 	var err error = nil
 
