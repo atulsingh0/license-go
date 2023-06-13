@@ -56,7 +56,7 @@ func (sl *Slic) marshal(licstring []byte) error {
 
 func (rl *Rlic) Generate() (string, error) {
 
-	var sl Slic = Slic{}
+	var sl = Slic{}
 
 	// generating public and private key based on the random key passed.
 	privateKey, _ := getKeys(os.Getenv("KEY"))
