@@ -9,7 +9,7 @@ import (
 
 func LoadEnvVar() {
 
-	readFile, err := os.Open("./config")
+	readFile, err := os.Open("./config.yml")
 
 	if err != nil {
 		log.Fatal("Unable to read config file", err)
@@ -19,12 +19,11 @@ func LoadEnvVar() {
 	fileScanner.Split(bufio.ScanLines)
 
 	for fileScanner.Scan() {
-		env := strings.Split(fileScanner.Text(), "=")
+		env := strings.Split(fileScanner.Text(), ":")
 		// setting env var
-		err := os.Setenv(env[0], env[1])
+		err := os.Setenv(env[0], strings.Trim(env[1], " "))
 		if err != nil {
 			log.Fatal("Unable to set the env var", err)
 		}
 	}
-	readFile.Close()
 }
