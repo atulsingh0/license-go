@@ -5,32 +5,32 @@ import (
 	"fmt"
 )
 
-func (inp *Rlic) InputValidation() error {
+func (rl *Rlic) InputValidation() error {
 
 	var err error = nil
 
-	if inp.Version == "" {
+	if rl.Version == "" {
 		err = errors.Join(err, fmt.Errorf("%s", "version should not be empty"))
 	}
-	if inp.Customer == "" {
+	if rl.Customer == "" {
 		err = errors.Join(err, fmt.Errorf("%s", "customer should not be empty"))
 	}
-	if inp.ValidFrom == "" {
+	if rl.ValidFrom == "" {
 		err = errors.Join(err, fmt.Errorf("%s", "valid-from should not be empty"))
 	}
-	if inp.Expiry == "" {
+	if rl.Expiry == "" {
 		err = errors.Join(err, fmt.Errorf("%s", "expiry-date should not be empty"))
 	}
-	if inp.HardExpiry == "" {
+	if rl.HardExpiry == "" {
 		err = errors.Join(err, fmt.Errorf("%s", "hard-expiry-date should not be empty"))
 	}
-	if inp.Seats == 0 {
+	if rl.Seats == 0 {
 		err = errors.Join(err, fmt.Errorf("%s", "seats should not be 0"))
 	}
-	if inp.HardSeats == 0 {
+	if rl.HardSeats == 0 {
 		err = errors.Join(err, fmt.Errorf("%s", "hard-seats should not be 0"))
 	}
-	if inp.Type == "" {
+	if rl.Type == "" {
 		err = errors.Join(err, fmt.Errorf("%s", "type should not be empty"))
 	}
 	return err
