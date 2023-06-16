@@ -1,6 +1,7 @@
 package main
 
 import (
+	"net/http"
 	"os"
 	"runtime"
 	"strings"
@@ -11,18 +12,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-// initializing the app
-func init() {
+func main() {
+
+	// initilization
+	runtime.GOMAXPROCS(runtime.NumCPU())
 	initializers.LoadEnvVar()
 
 	if strings.ToUpper(os.Getenv("ENV")) == "PROD" {
 		gin.SetMode(gin.ReleaseMode)
 	}
-}
+	//
 
-func main() {
-
-	runtime.GOMAXPROCS(runtime.NumCPU())
 	router := gin.Default()
 
 	router.GET("/", welcome)
@@ -35,7 +35,7 @@ func main() {
 
 // welcome msg
 func welcome(c *gin.Context) {
-	c.JSON(200, gin.H{
+	c.JSON(http.StatusOK, gin.H{
 		"message": "Welcome to License-GO",
 	})
 }
