@@ -30,7 +30,6 @@ type Rlic struct {
 func (sl *Slic) unsignedLicense() *Rlic {
 
 	return &Rlic{&models.RawLicense{
-		Version:    sl.Version,
 		Customer:   sl.Customer,
 		ValidFrom:  sl.ValidFrom,
 		Expiry:     sl.Expiry,

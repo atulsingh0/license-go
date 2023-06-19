@@ -9,9 +9,6 @@ func (rl *Rlic) InputValidation() error {
 
 	var err error = nil
 
-	if rl.Version == "" {
-		err = errors.Join(err, fmt.Errorf("%s", "version should not be empty"))
-	}
 	if rl.Customer == "" {
 		err = errors.Join(err, fmt.Errorf("%s", "customer should not be empty"))
 	}
