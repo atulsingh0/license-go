@@ -8,6 +8,7 @@ import (
 	"os"
 
 	"github.com/atulsingh0/license-go/src/models"
+	"github.com/google/uuid"
 )
 
 type Slic struct {
@@ -75,6 +76,9 @@ func (rl *Rlic) Generate() (string, error) {
 		return "", err
 	}
 	sl.Signature = signature
+
+	// generating uuid
+	sl.Id = uuid.NewString()
 
 	lic, err := sl.string()
 	if err != nil {
