@@ -39,13 +39,13 @@ tasks:
       - |
         godoc &
         echo 'docs are open at:'
-        echo 'http://localhost:6060/pkg/github.com/circleci/policy-agent/'
+        echo 'http://localhost:6060/pkg/github.com/atulsingh0/license-go/'
         wait
 
   doc-open:
     desc: Run 'godoc', open the docs url in your browser
     cmds:
-      - sleep .5 && open 'http://localhost:6060/pkg/github.com/circleci/policy-agent/' &
+      - sleep .5 && open 'http://localhost:6060/pkg/github.com/atulsingh0/license-go/' &
       - task: doc
 
   check-go-mod:
