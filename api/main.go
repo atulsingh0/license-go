@@ -6,8 +6,8 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/atulsingh0/license-go/src/controllers"
-	"github.com/atulsingh0/license-go/src/initializers"
+	"github.com/atulsingh0/license-go/api/controllers"
+	"github.com/atulsingh0/license-go/pkg/initializers"
 
 	"github.com/gin-gonic/gin"
 )

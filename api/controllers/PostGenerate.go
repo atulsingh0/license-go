@@ -3,7 +3,7 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/atulsingh0/license-go/src/generate"
+	"github.com/atulsingh0/license-go/pkg/generate"
 
 	"github.com/gin-gonic/gin"
 )

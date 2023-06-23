@@ -3,7 +3,7 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/atulsingh0/license-go/src/validate"
+	"github.com/atulsingh0/license-go/pkg/validate"
 	"github.com/gin-gonic/gin"
 )
 

@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/atulsingh0/license-go/src/models"
+	"github.com/atulsingh0/license-go/models"
 	"github.com/google/uuid"
 )
 
