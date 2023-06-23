@@ -9,7 +9,7 @@ import (
 
 func LoadEnvVar() {
 
-	readFile, err := os.Open("./config.yml")
+	readFile, err := os.Open("./config/config.yml")
 
 	if err != nil {
 		log.Fatal("Unable to read config file", err)
