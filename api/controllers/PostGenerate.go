@@ -12,12 +12,15 @@ func PostGenerate(c *gin.Context) {
 
 	// reading and binding the post data
 	inpBody := generate.Rlic{}
-	c.ShouldBindJSON(&inpBody)
+	err := c.ShouldBindJSON(&inpBody)
 
 	// Validating the input data
-	err := inpBody.InputValidation()
-
 	if err != nil {
+		c.AbortWithStatusJSON(http.StatusNoContent, gin.H{
+			"error": err.Error(),
+			"code":  http.StatusNoContent,
+		})
+	} else if err := inpBody.InputValidation(); err != nil {
 		c.AbortWithStatusJSON(http.StatusPartialContent, gin.H{
 			"error": err.Error(),
 			"code":  http.StatusPartialContent,
@@ -28,7 +31,7 @@ func PostGenerate(c *gin.Context) {
 		lic, err := inpBody.Generate()
 
 		if err != nil {
-			c.JSON(http.StatusUnprocessableEntity, gin.H{
+			c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{
 				"error": err.Error(),
 				"code":  http.StatusUnprocessableEntity,
 			})
