@@ -109,6 +109,11 @@ go-mod-tidy() {
     go mod tidy -v
 }
 
+help_run="Run 'application'"
+run() {
+    go run api/main.go
+}
+
 install-go-bin() {
     local binDir="$PWD/bin"
     for pkg in "${@}"; do

@@ -3,7 +3,7 @@
 # To run locally
 
 ```
-go run /src/api/main.go
+go run api/main.go
 ```
 
 ## To generate a license
