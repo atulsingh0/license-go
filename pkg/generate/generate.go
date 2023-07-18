@@ -5,10 +5,12 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
+	"log"
 	"os"
 
-	"github.com/atulsingh0/license-go/models"
 	"github.com/google/uuid"
+
+	"github.com/atulsingh0/license-go/models"
 )
 
 type Slic struct {
@@ -58,9 +60,15 @@ func (sl *Slic) marshal(licstring []byte) error {
 func (rl *Rlic) Generate() (string, error) {
 
 	var sl = Slic{}
+	var privateKey ed25519.PrivateKey
 
 	// generating public and private key based on the random key passed.
-	privateKey, _ := getKeys(os.Getenv("KEY"))
+	key, isExists := os.LookupEnv("KEY")
+	if isExists && key != "" {
+		privateKey, _ = getKeys(key)
+	} else {
+		return "", fmt.Errorf("env var KEY is not set or empty")
+	}
 
 	licstring, err := rl.string()
 	if err != nil {
@@ -82,9 +90,8 @@ func (rl *Rlic) Generate() (string, error) {
 
 	lic, err := sl.string()
 	if err != nil {
-		fmt.Println(err)
 		return "", err
 	}
-	fmt.Println(string(lic))
+	log.Println(string(lic))
 	return string(lic), nil
 }
