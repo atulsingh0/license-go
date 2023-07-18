@@ -21,7 +21,7 @@ func LoadEnvVar() {
 	for fileScanner.Scan() {
 		env := strings.Split(fileScanner.Text(), ":")
 		// setting env var, if not set
-		if os.Getenv(env[0]) == "" {
+		if _, isExists := os.LookupEnv(env[0]); !isExists {
 			err := os.Setenv(env[0], strings.Trim(env[1], " "))
 			if err != nil {
 				log.Fatal("Unable to set the env var", err)
