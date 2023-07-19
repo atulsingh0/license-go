@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 includes:
   ci:
@@ -15,13 +15,13 @@ tasks:
     desc: Code Linting
     summary: Lint the project files with golangci-lint
     cmds:
-      - golangci-lint run -c .golangci.yml
+      - ./bin/golangci-lint run -c .golangci.yml
 
   format:
     desc: Run 'goimports' to format go imports
     summary: Runs goimports on all files with -local support, can also replace gofmt
     cmds:
-      - goimports -w .
+      - ./bin/goimports -w .
 
   test:
     desc: Run the tests
@@ -53,8 +53,3 @@ tasks:
     cmds:
       - go mod tidy -v
       - git diff --exit-code -- go.mod go.sum
-
-  create-mocks:
-    desc: generate mocks
-    cmds:
-      - ./genmocks.sh

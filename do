@@ -3,7 +3,9 @@ set -eu -o pipefail
 
 reportDir="test-reports"
 
+branch=$(git symbolic-ref --short HEAD 2>/dev/null || echo unknown)
 gitref=$(git rev-parse --short HEAD 2>/dev/null || echo latest)
+do_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" >/dev/null 2>&1 && pwd)"
 if [[ "${CI-}" == "true" ]]; then
     if [[ "${CIRCLE_BRANCH-}" == "main" ]]; then
         readonly _version="v1.0.${CIRCLE_BUILD_NUM-0}-${gitref}"
@@ -59,18 +61,18 @@ help_run_goimports="Run goimports for package"
 run-goimports() {
     local files
     files=$(find . \( -name '*.go' -not -path "./example/*" \))
-    ./bin/gosimports -local "github.com/atulsingh0/license-go" -w $files
+    "${do_dir}"/bin/gosimports -local "github.com/atulsingh0/license-go" -w $files
 }
 
 # This variable is used, but shellcheck can't tell.
 # shellcheck disable=SC2034
 help_lint="Run golanci-lint to lint go files."
 lint() {
-    ./bin/golangci-lint run "${@:-./...}"
+    "${do_dir}"/bin/golangci-lint run "${@:-./...}"
 
     local files
     files=$(find . \( -name '*.go' -not -path "./example*" \))
-    if [ -n "$(./bin/gosimports -local "github.com/atulsingh0/license-go" -d $files)" ]; then
+    if [ -n "$(${do_dir}/bin/gosimports -local "github.com/atulsingh0/license-go" -d $files)" ]; then
         echo "Go imports check failed, please run ./do run-goimports"
         exit 1
     fi
@@ -89,7 +91,7 @@ help_test="Run the tests"
 test() {
     mkdir -p "${reportDir}"
     # -count=1 is used to forcibly disable test result caching
-    ./bin/gotestsum --junitfile="${reportDir}/junit.xml" -- -count=1 "${@:-./...}"
+    "${do_dir}"/bin/gotestsum --junitfile="${reportDir}/junit.xml" -- -count=1 "${@:-./...}"
 }
 
 help_release="Make a release"
