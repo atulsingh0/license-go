@@ -3,8 +3,9 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/atulsingh0/license-go/pkg/validate"
 	"github.com/gin-gonic/gin"
+
+	"github.com/atulsingh0/license-go/pkg/validate"
 )
 
 func PostValidate(c *gin.Context) {

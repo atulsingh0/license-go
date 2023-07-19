@@ -3,9 +3,9 @@ package controllers
 import (
 	"net/http"
 
-	"github.com/atulsingh0/license-go/pkg/generate"
-
 	"github.com/gin-gonic/gin"
+
+	"github.com/atulsingh0/license-go/pkg/generate"
 )
 
 func PostGenerate(c *gin.Context) {
