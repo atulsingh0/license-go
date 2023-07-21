@@ -11,6 +11,12 @@ tasks:
     cmds:
       - go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.45.2
 
+  run:
+    desc: Running the Application
+    summary: Execute the api
+    cmds:
+      - go run api/main.go
+
   lint:
     desc: Code Linting
     summary: Lint the project files with golangci-lint
