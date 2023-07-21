@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 
 	"github.com/atulsingh0/license-go/pkg/generate"
+	"github.com/atulsingh0/license-go/pkg/storage"
 )
 
 func PostGenerate(c *gin.Context) {
@@ -28,7 +29,7 @@ func PostGenerate(c *gin.Context) {
 	} else {
 
 		//generating the license
-		lic, err := inpBody.Generate()
+		sl, lic, err := inpBody.Generate()
 
 		if err != nil {
 			c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{
@@ -36,7 +37,15 @@ func PostGenerate(c *gin.Context) {
 				"code":  http.StatusUnprocessableEntity,
 			})
 		} else {
-			c.JSON(http.StatusOK, lic)
+			// Writing to Plugins
+			if err = storage.Plugins(sl, lic); err != nil {
+				c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{
+					"error": err.Error(),
+					"code":  http.StatusUnprocessableEntity,
+				})
+			} else {
+				c.JSON(http.StatusOK, lic)
+			}
 		}
 
 	}

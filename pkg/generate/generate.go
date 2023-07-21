@@ -57,7 +57,7 @@ func (sl *Slic) marshal(licstring []byte) error {
 	return nil
 }
 
-func (rl *Rlic) Generate() (string, error) {
+func (rl *Rlic) Generate() (Slic, string, error) {
 
 	var sl = Slic{}
 	var privateKey ed25519.PrivateKey
@@ -67,12 +67,12 @@ func (rl *Rlic) Generate() (string, error) {
 	if isExists && key != "" {
 		privateKey, _ = getKeys(key)
 	} else {
-		return "", fmt.Errorf("env var KEY is not set or empty")
+		return sl, "", fmt.Errorf("env var KEY is not set or empty")
 	}
 
 	licstring, err := rl.string()
 	if err != nil {
-		return "", err
+		return sl, "", err
 	}
 
 	sig := ed25519.Sign(privateKey, licstring)
@@ -81,7 +81,7 @@ func (rl *Rlic) Generate() (string, error) {
 	err = sl.marshal(licstring)
 	if err != nil {
 		fmt.Println("marshaling sl", err)
-		return "", err
+		return sl, "", err
 	}
 	sl.Signature = signature
 
@@ -90,8 +90,8 @@ func (rl *Rlic) Generate() (string, error) {
 
 	lic, err := sl.string()
 	if err != nil {
-		return "", err
+		return sl, "", err
 	}
 	log.Println(string(lic))
-	return string(lic), nil
+	return sl, string(lic), nil
 }
