@@ -13,41 +13,43 @@ func PostGenerate(c *gin.Context) {
 
 	// reading and binding the post data
 	inpBody := generate.Rlic{}
-	err := c.ShouldBindJSON(&inpBody)
 
 	// Validating the input data
-	if err != nil {
+	if err := c.ShouldBindJSON(&inpBody); err != nil {
 		c.AbortWithStatusJSON(http.StatusNoContent, gin.H{
 			"error": err.Error(),
 			"code":  http.StatusNoContent,
 		})
-	} else if err := inpBody.InputValidation(); err != nil {
+		return
+	}
+
+	if err := inpBody.InputValidation(); err != nil {
 		c.AbortWithStatusJSON(http.StatusPartialContent, gin.H{
 			"error": err.Error(),
 			"code":  http.StatusPartialContent,
 		})
-	} else {
-
-		//generating the license
-		sl, lic, err := inpBody.Generate()
-
-		if err != nil {
-			c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{
-				"error": err.Error(),
-				"code":  http.StatusUnprocessableEntity,
-			})
-		} else {
-			// Writing to Plugins
-			if err = storage.Plugins(sl, lic); err != nil {
-				c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{
-					"error": err.Error(),
-					"code":  http.StatusUnprocessableEntity,
-				})
-			} else {
-				c.JSON(http.StatusOK, lic)
-			}
-		}
-
+		return
 	}
+
+	//generating the license
+	sl, lic, err := inpBody.Generate()
+
+	if err != nil {
+		c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{
+			"error": err.Error(),
+			"code":  http.StatusUnprocessableEntity,
+		})
+		return
+	}
+
+	// Writing to Plugins
+	if err = storage.Plugins(sl, lic); err != nil {
+		c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{
+			"error": err.Error(),
+			"code":  http.StatusUnprocessableEntity,
+		})
+		return
+	}
+	c.JSON(http.StatusOK, lic)
 
 }
