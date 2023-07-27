@@ -13,7 +13,6 @@ import (
 )
 
 func main() {
-
 	// initilization
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	initializers.LoadEnvVar()
@@ -23,11 +22,15 @@ func main() {
 	}
 	//
 
+	api := controllers.GeneratorAPI{
+		Destinations: []string{os.Getenv("DESTINATION")},
+	}
+
 	router := gin.Default()
 
 	router.GET("/", welcome)
 	router.POST("/", welcome)
-	router.POST("/generate", controllers.PostGenerate)
+	router.POST("/generate", api.PostGenerate)
 	router.POST("/validate", controllers.PostValidate)
 
 	router.Run()
