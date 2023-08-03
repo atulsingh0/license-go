@@ -9,25 +9,19 @@ import (
 	"github.com/atulsingh0/license-go/pkg/storage"
 )
 
-func PostGenerate(c *gin.Context) {
+func PostGenerate(ctx *gin.Context) {
 
 	// reading and binding the post data
 	inpBody := generate.Rlic{}
 
 	// Validating the input data
-	if err := c.ShouldBindJSON(&inpBody); err != nil {
-		c.AbortWithStatusJSON(http.StatusNoContent, gin.H{
-			"error": err.Error(),
-			"code":  http.StatusNoContent,
-		})
+	if err := ctx.ShouldBindJSON(&inpBody); err != nil {
+		errMsg(ctx, http.StatusNoContent, err)
 		return
 	}
 
 	if err := inpBody.InputValidation(); err != nil {
-		c.AbortWithStatusJSON(http.StatusPartialContent, gin.H{
-			"error": err.Error(),
-			"code":  http.StatusPartialContent,
-		})
+		errMsg(ctx, http.StatusPartialContent, err)
 		return
 	}
 
@@ -35,21 +29,27 @@ func PostGenerate(c *gin.Context) {
 	sl, lic, err := inpBody.Generate()
 
 	if err != nil {
-		c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{
-			"error": err.Error(),
-			"code":  http.StatusUnprocessableEntity,
-		})
+		errMsg(ctx, http.StatusUnprocessableEntity, err)
 		return
 	}
 
 	// Writing to Plugins
 	if err = storage.Plugins(sl, lic); err != nil {
-		c.AbortWithStatusJSON(http.StatusUnprocessableEntity, gin.H{
-			"error": err.Error(),
-			"code":  http.StatusUnprocessableEntity,
-		})
+		errMsg(ctx, http.StatusUnprocessableEntity, err)
 		return
 	}
-	c.JSON(http.StatusOK, lic)
+	msg(ctx, http.StatusOK, lic)
+}
 
+func msg(ctx *gin.Context, status int, message string) {
+	ctx.JSON(status, gin.H{
+		"message": message,
+	})
+}
+
+func errMsg(ctx *gin.Context, status int, err error) {
+	ctx.AbortWithStatusJSON(status, gin.H{
+		"error": err.Error(),
+		"code":  status,
+	})
 }
