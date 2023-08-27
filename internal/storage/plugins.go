@@ -5,7 +5,7 @@ import (
 	"log"
 	"os"
 
-	"github.com/atulsingh0/license-go/pkg/generate"
+	"github.com/datagenx/license-generator/internal/generate"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )

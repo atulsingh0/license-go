@@ -5,8 +5,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/atulsingh0/license-go/pkg/generate"
-	"github.com/atulsingh0/license-go/pkg/storage"
+	"github.com/datagenx/license-generator/internal/generate"
+	"github.com/datagenx/license-generator/internal/storage"
 )
 
 func PostGenerate(ctx *gin.Context) {

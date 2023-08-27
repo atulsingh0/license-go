@@ -1,6 +1,6 @@
-module github.com/atulsingh0/license-go
+module github.com/datagenx/license-generator
 
-go 1.20
+go 1.21
 
 require (
 	github.com/gin-gonic/gin v1.9.1

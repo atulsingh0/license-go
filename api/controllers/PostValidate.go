@@ -5,7 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/atulsingh0/license-go/pkg/validate"
+	"github.com/datagenx/license-generator/internal/validate"
 )
 
 func PostValidate(ctx *gin.Context) {
