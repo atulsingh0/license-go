@@ -10,7 +10,7 @@ import (
 
 	"github.com/google/uuid"
 
-	"github.com/atulsingh0/license-go/models"
+	"github.com/datagenx/license-generator/models"
 )
 
 type Slic struct {

@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/atulsingh0/license-go/pkg/generate"
+	"github.com/datagenx/license-generator/internal/generate"
 )
 
 type FileStorage struct {

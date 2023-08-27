@@ -8,8 +8,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 
-	"github.com/atulsingh0/license-go/api/controllers"
-	"github.com/atulsingh0/license-go/pkg/initializers"
+	"github.com/datagenx/license-generator/api/controllers"
+	"github.com/datagenx/license-generator/internal/initializers"
 )
 
 func main() {
