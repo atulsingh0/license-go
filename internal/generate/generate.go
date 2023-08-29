@@ -5,7 +5,6 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
-	"log"
 	"os"
 
 	"github.com/datagenx/license-generator/models"
@@ -29,6 +28,14 @@ func getKeys(key string) (ed25519.PrivateKey, string) {
 	pub := base64.StdEncoding.EncodeToString(priv.Public().(ed25519.PublicKey))
 
 	return priv, pub
+}
+
+func genSign(data []byte, key string) (string, string) {
+
+	pvtKey, pubKey := getKeys(key)
+	sig := ed25519.Sign(pvtKey, data)
+
+	return pubKey, base64.StdEncoding.EncodeToString(sig)
 }
 
 func (rl *Rlic) string() ([]byte, error) {
@@ -59,23 +66,13 @@ func (sl *Slic) marshal(licstring []byte) error {
 func (rl *Rlic) Generate() (Slic, string, error) {
 
 	var sl = Slic{}
-	var privateKey ed25519.PrivateKey
-
-	// generating public and private key based on the random key passed.
-	key, isExists := os.LookupEnv("KEY")
-	if isExists && key != "" {
-		privateKey, _ = getKeys(key)
-	} else {
-		return sl, "", fmt.Errorf("env var KEY is not set or empty")
-	}
 
 	licstring, err := rl.string()
 	if err != nil {
 		return sl, "", err
 	}
 
-	sig := ed25519.Sign(privateKey, licstring)
-	signature := base64.StdEncoding.EncodeToString(sig)
+	_, signature := genSign(licstring, os.Getenv("ENCRYPT_SEED"))
 
 	err = sl.marshal(licstring)
 	if err != nil {
@@ -88,9 +85,11 @@ func (rl *Rlic) Generate() (Slic, string, error) {
 	sl.Id = uuid.NewString()
 
 	lic, err := sl.string()
+
+	_, signature = genSign(lic, os.Getenv("RE_ENCRYPT_SEED"))
+
 	if err != nil {
 		return sl, "", err
 	}
-	log.Println(string(lic))
-	return sl, string(lic), nil
+	return sl, signature, nil
 }
