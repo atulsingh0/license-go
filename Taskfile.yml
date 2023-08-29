@@ -9,25 +9,25 @@ tasks:
     desc: Install Pre-requisites
     summary: Installs the various tools needed to work with this project
     cmds:
-      - go install github.com/golangci/golangci-lint/cmd/golangci-lint@v1.45.2
+      - ./do install-devtools
 
   run:
     desc: Running the Application
     summary: Execute the api
     cmds:
-      - go run api/main.go
+      - ./do run
 
   lint:
     desc: Code Linting
     summary: Lint the project files with golangci-lint
     cmds:
-      - ./bin/golangci-lint run -c .golangci.yml
+      - ./do lint #./bin/golangci-lint run -c .golangci.yml
 
   format:
     desc: Run 'goimports' to format go imports
     summary: Runs goimports on all files with -local support, can also replace gofmt
     cmds:
-      - ./bin/goimports -w .
+      - ./do run-goimports #./bin/goimports -w .
 
   test:
     desc: Run the tests
@@ -37,7 +37,7 @@ tasks:
   go-mod-tidy:
     desc: Run 'go mod tidy' to clean up module files.
     cmds:
-      - go mod tidy -v
+      - ./do go-mod-tidy #go mod tidy -v
 
   doc:
     desc: Run 'godoc', print docs url
@@ -45,17 +45,16 @@ tasks:
       - |
         godoc &
         echo 'docs are open at:'
-        echo 'http://localhost:6060/pkg/github.com/atulsingh0/license-go/'
+        echo 'http://localhost:6060/pkg/github.com/datagenx/license-generator/'
         wait
 
   doc-open:
     desc: Run 'godoc', open the docs url in your browser
     cmds:
-      - sleep .5 && open 'http://localhost:6060/pkg/github.com/atulsingh0/license-go/' &
+      - sleep .5 && open 'http://localhost:6060/pkg/github.com/datagenx/license-generator/' &
       - task: doc
 
   check-go-mod:
     desc: Check go.mod is tidy
     cmds:
-      - go mod tidy -v
-      - git diff --exit-code -- go.mod go.sum
+      - ./do check-gomod

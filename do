@@ -22,46 +22,13 @@ check-gomod() {
     git diff --exit-code -- go.mod go.sum
 }
 
-help_check_rootcerts="Check rootcerts is up to date"
-check-rootcerts() {
-    generate
-    git diff --ignore-matching-lines='Generated on ' --exit-code -- ./rootcerts
-}
-
-# This variable is used, but shellcheck can't tell.
-# shellcheck disable=SC2034
-help_generate="generate any generated code"
-generate() {
-    go generate -x ./...
-
-    if ! command -v protoc; then
-        echo "missing protoc: install protobuf package version v3.3.0 or similar"
-        exit 1
-    fi
-
-    local protoc_version
-    protoc_version=$(grep google.golang.org/protobuf go.mod | tr -s \  | cut -f2 -d\ )
-    install-go-bin \
-        "google.golang.org/protobuf/cmd/protoc-gen-go@${protoc_version}" \
-        "google.golang.org/grpc/cmd/protoc-gen-go-grpc@v1.1"
-    export PATH="./bin:$PATH"
-
-    set -x
-    protoc -I . --go_out=. --go_opt=paths=source_relative --go-grpc_out=. --go-grpc_opt=paths=source_relative grpc/internal/testgrpc/*.proto
-
-    run-goimports ./rootcerts
-
-    # TODO: Remove this when https://github.com/gwatts/rootcerts/pull/42 is merged
-    rm -f rootcerts/rootcerts_16.go
-}
-
 # This variable is used, but shellcheck can't tell.
 # shellcheck disable=SC2034
 help_run_goimports="Run goimports for package"
 run-goimports() {
     local files
     files=$(find . \( -name '*.go' -not -path "./example/*" \))
-    "${do_dir}"/bin/gosimports -local "github.com/atulsingh0/license-go" -w $files
+    "${do_dir}"/bin/gosimports -local "github.com/datagenx/license-generator" -w $files
 }
 
 # This variable is used, but shellcheck can't tell.
@@ -72,7 +39,7 @@ lint() {
 
     local files
     files=$(find . \( -name '*.go' -not -path "./example*" \))
-    if [ -n "$(${do_dir}/bin/gosimports -local "github.com/atulsingh0/license-go" -d $files)" ]; then
+    if [ -n "$(${do_dir}/bin/gosimports -local "github.com/datagenx/license-generator" -d $files)" ]; then
         echo "Go imports check failed, please run ./do run-goimports"
         exit 1
     fi
