@@ -3,9 +3,8 @@ package controllers
 import (
 	"net/http"
 
+	"github.com/datagenx/license-validator/pkgs/validate"
 	"github.com/gin-gonic/gin"
-
-	"github.com/datagenx/license-generator/internal/validate"
 )
 
 func PostValidate(ctx *gin.Context) {
