@@ -6,10 +6,9 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/gin-gonic/gin"
-
 	"github.com/datagenx/license-generator/api/controllers"
 	"github.com/datagenx/license-generator/internal/initializers"
+	"github.com/gin-gonic/gin"
 )
 
 func main() {

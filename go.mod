@@ -1,8 +1,9 @@
 module github.com/datagenx/license-generator
 
-go 1.21
+go 1.21.0
 
 require (
+	github.com/datagenx/license-validator v0.0.0-20230828142756-5d6c5ab8d2a0
 	github.com/gin-gonic/gin v1.9.1
 	github.com/google/uuid v1.3.0
 	github.com/lib/pq v1.10.9

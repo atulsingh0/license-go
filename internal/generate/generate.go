@@ -8,9 +8,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/google/uuid"
-
 	"github.com/datagenx/license-generator/models"
+	"github.com/google/uuid"
 )
 
 type Slic struct {
