@@ -41,9 +41,7 @@ func PostGenerate(ctx *gin.Context) {
 }
 
 func msg(ctx *gin.Context, status int, message string) {
-	ctx.JSON(status, gin.H{
-		"message": message,
-	})
+	ctx.String(status, message)
 }
 
 func errMsg(ctx *gin.Context, status int, err error) {
