@@ -227,6 +227,10 @@ list() {
     declare -F | awk '{print $3}'
 }
 
+docker-compose-up() {
+    docker-compose up
+}
+
 # This variable is used, but shellcheck can't tell.
 # shellcheck disable=SC2034
 help_help="Print help text, or detailed help for a task."

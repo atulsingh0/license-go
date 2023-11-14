@@ -58,3 +58,8 @@ tasks:
     desc: Check go.mod is tidy
     cmds:
       - ./do check-gomod
+
+  dc-up:
+    desc: Docker Compose Up
+    cmds:
+      - ./do docker-compose-up
