@@ -5,8 +5,9 @@ services:
     build: .
     container_name: "license"
     image: "license"
-    env_file:
-      - config/config.yml
+    environment:
+      - CONFIG_FILE="/config/config.yml"
     ports:
-      - 8080
-
+      - 9200:9200
+    volumes:
+      - ${PWD}/config/config.yml:/config/config.yml
