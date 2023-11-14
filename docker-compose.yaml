@@ -1,0 +1,12 @@
+version: '3'
+services:
+
+  license:
+    build: .
+    container_name: "license"
+    image: "license"
+    env_file:
+      - config/config.yml
+    ports:
+      - 8080
+
