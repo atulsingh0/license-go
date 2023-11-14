@@ -17,7 +17,7 @@ func main() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 	initializers.LoadEnvVar()
 
-	if strings.ToUpper(os.Getenv("ENV")) == "PROD" {
+	if strings.ToUpper(os.Getenv("ENV_TYPE")) == "PROD" {
 		gin.SetMode(gin.ReleaseMode)
 	}
 	//

@@ -1,4 +1,4 @@
-ENV: dev
+ENV_TYPE: dev
 PORT: 9200
 KEY: OLrqpXdOArsyinJTTnEQGw4efO1QsuvA
 PUB_KEY: o/HlUXwbWIHqsMGmGVrruW72seuG5ws7PfO09LQEURI=
