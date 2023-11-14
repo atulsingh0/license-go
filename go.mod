@@ -1,6 +1,6 @@
 module github.com/datagenx/license-generator
 
-go 1.21.0
+go 1.20
 
 require (
 	github.com/datagenx/license-validator v0.0.0-20230828142756-5d6c5ab8d2a0
