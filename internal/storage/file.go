@@ -19,7 +19,7 @@ func (fs *FileStorage) Save(sl generate.Slic, data string) error {
 	}
 	defer fh.Close()
 
-	value := fmt.Sprintf("%s|%s|%s|%s|%s|%d|%d|%s|%s\n", sl.Id, sl.Customer,
+	value := fmt.Sprintf("%s|%s|%s|%s|%d|%d|%s|%s\n", sl.Customer,
 		sl.ValidFrom, sl.Expiry, sl.HardExpiry, sl.Seats, sl.HardSeats, sl.Type, data)
 
 	_, err = fh.WriteString(value)

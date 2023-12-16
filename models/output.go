@@ -1,7 +1,6 @@
 package models
 
 type SignedLicense struct {
-	Id         string `json:"id"`
 	Customer   string `json:"customer"`
 	ValidFrom  string `json:"valid-from"`
 	Expiry     string `json:"expiry-date"`
